@@ -1,7 +1,5 @@
 <?php
 
-use Filament\Support\Enums\Width;
-
 return [
     'resources' => [
         'enabled' => true,
@@ -12,5 +10,4 @@ return [
         'navigation_sort' => null,
         'navigation_count_badge' => false,
     ],
-    'modal-width' => Width::FiveExtraLarge,
 ];
