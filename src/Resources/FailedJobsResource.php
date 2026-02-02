@@ -22,6 +22,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Novadaemon\FilamentPrettyJson\Form\PrettyJsonField;
 use Vstruhar\FilamentFailedJobs\FilamentFailedJobsPlugin;
 use Vstruhar\FilamentFailedJobs\Models\FailedJob;
 use Vstruhar\FilamentFailedJobs\Resources\FailedJobsResource\Pages\ListFailedJobs;
@@ -51,6 +52,7 @@ class FailedJobsResource extends Resource
                     ->valueLabel('Model')
                     ->formatStateUsing(fn (Model $record) => $record->getModels()->mapWithKeys(fn ($value, $key) => ['$' . $key => $value])->toArray())
                     ->hidden(fn (Model $record) => $record->getModels()->isEmpty()),
+                PrettyJsonField::make('payload')->columnSpanFull(),
                 ViewField::make('exception')
                     ->view('filament-failed-jobs::exception-field')
                     ->columnSpan(2),
@@ -138,7 +140,8 @@ class FailedJobsResource extends Resource
                         $livewire->resetTable();
                     }),
                 ViewAction::make()
-                    ->button(),
+                    ->button()
+                    ->modalWidth(config('filament-failed-jobs.modal-width')),
             ])
             ->filters([
                 SelectFilter::make('queue')
